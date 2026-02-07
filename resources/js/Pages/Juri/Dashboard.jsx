@@ -2,7 +2,8 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm, usePage } from '@inertiajs/react';
 
 export default function Dashboard() {
-    const { designs } = usePage().props;
+    // AMAN supaya tidak error length
+    const { designs = [] } = usePage().props;
 
     return (
         <AuthenticatedLayout>
@@ -11,17 +12,17 @@ export default function Dashboard() {
             {/* HEADER */}
             <div className="mb-8">
                 <h1 className="text-2xl font-semibold text-gray-800">
-                    Penilaian Desain
+                    Dashboard Juri
                 </h1>
                 <p className="text-sm text-gray-500 mt-1">
-                    Silakan nilai desain yang dikirim peserta
+                    Silakan beri penilaian pada desain peserta
                 </p>
             </div>
 
-            <div className="space-y-6 max-w-4xl">
+            <div className="space-y-6 max-w-5xl">
                 {designs.length === 0 && (
                     <p className="text-gray-500 text-sm">
-                        Belum ada desain yang perlu dinilai.
+                        Tidak ada desain yang perlu dinilai.
                     </p>
                 )}
 
@@ -33,30 +34,35 @@ export default function Dashboard() {
     );
 }
 
+/* ================= DESIGN CARD ================= */
+
 function DesignCard({ design }) {
     const { data, setData, post, processing, errors } = useForm({
-        score: '',
+        creativity: '',
+        aesthetic: '',
+        theme: '',
+        technique: '',
         comment: '',
     });
 
     const submit = (e) => {
         e.preventDefault();
-
         post(route('juri.score.store', design.id));
     };
 
     return (
-        <div className="bg-white border rounded-xl p-6">
+        <div className="bg-white border rounded-2xl p-6 shadow-sm">
             <div className="flex gap-6">
                 {/* IMAGE */}
                 <img
                     src={`/storage/${design.image_path}`}
-                    className="w-48 h-48 object-cover rounded-lg border"
+                    alt={design.title}
+                    className="w-52 h-52 object-cover rounded-xl border"
                 />
 
                 {/* INFO */}
                 <div className="flex-1">
-                    <h3 className="text-lg font-medium text-gray-800">
+                    <h3 className="text-lg font-semibold text-gray-800">
                         {design.title}
                     </h3>
 
@@ -65,12 +71,13 @@ function DesignCard({ design }) {
                     </p>
 
                     <p className="text-sm text-gray-600 mt-3">
-                        {design.description ?? 'Tidak ada deskripsi.'}
+                        {design.description || 'Tidak ada deskripsi.'}
                     </p>
 
+                    {/* STATUS */}
                     <div className="mt-4">
                         <span
-                            className={`text-xs px-3 py-1 rounded-full ${
+                            className={`text-xs px-3 py-1 rounded-full font-medium ${
                                 design.status === 'reviewed'
                                     ? 'bg-green-100 text-green-700'
                                     : 'bg-yellow-100 text-yellow-700'
@@ -82,58 +89,104 @@ function DesignCard({ design }) {
                         </span>
                     </div>
 
-                    {/* FORM NILAI */}
+                    {/* FORM PENILAIAN */}
                     {design.status !== 'reviewed' && (
                         <form
                             onSubmit={submit}
-                            className="mt-5 space-y-3"
+                            className="mt-6 grid grid-cols-2 gap-4"
                         >
-                            <div>
-                                <input
-                                    type="number"
-                                    min="1"
-                                    max="100"
-                                    placeholder="Nilai (1–100)"
-                                    className="border rounded-md px-3 py-2 text-sm w-40"
-                                    value={data.score}
-                                    onChange={(e) =>
-                                        setData('score', e.target.value)
-                                    }
-                                />
-                                {errors.score && (
-                                    <p className="text-xs text-red-500 mt-1">
-                                        {errors.score}
-                                    </p>
-                                )}
-                            </div>
-
-                            <textarea
-                                placeholder="Komentar (opsional)"
-                                className="border rounded-md px-3 py-2 text-sm w-full"
-                                value={data.comment}
-                                onChange={(e) =>
-                                    setData('comment', e.target.value)
+                            <ScoreInput
+                                label="Kreativitas"
+                                value={data.creativity}
+                                error={errors.creativity}
+                                onChange={(v) =>
+                                    setData('creativity', v)
                                 }
                             />
 
-                            <button
-                                disabled={processing}
-                                className="px-4 py-2 bg-indigo-600 text-white rounded-md text-sm hover:bg-indigo-700 disabled:opacity-50"
-                            >
-                                {processing
-                                    ? 'Menyimpan...'
-                                    : 'Simpan Penilaian'}
-                            </button>
+                            <ScoreInput
+                                label="Estetika"
+                                value={data.aesthetic}
+                                error={errors.aesthetic}
+                                onChange={(v) =>
+                                    setData('aesthetic', v)
+                                }
+                            />
+
+                            <ScoreInput
+                                label="Kesesuaian Tema"
+                                value={data.theme}
+                                error={errors.theme}
+                                onChange={(v) => setData('theme', v)}
+                            />
+
+                            <ScoreInput
+                                label="Teknik"
+                                value={data.technique}
+                                error={errors.technique}
+                                onChange={(v) =>
+                                    setData('technique', v)
+                                }
+                            />
+
+                            {/* COMMENT */}
+                            <div className="col-span-2">
+                                <textarea
+                                    placeholder="Komentar (opsional)"
+                                    className="border rounded-lg px-3 py-2 text-sm w-full"
+                                    rows="3"
+                                    value={data.comment}
+                                    onChange={(e) =>
+                                        setData('comment', e.target.value)
+                                    }
+                                />
+                            </div>
+
+                            {/* SUBMIT */}
+                            <div className="col-span-2 flex justify-end">
+                                <button
+                                    disabled={processing}
+                                    className="px-5 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700 disabled:opacity-50"
+                                >
+                                    {processing
+                                        ? 'Menyimpan...'
+                                        : 'Simpan Penilaian'}
+                                </button>
+                            </div>
                         </form>
                     )}
 
                     {design.status === 'reviewed' && (
-                        <p className="text-sm text-gray-500 mt-4">
-                            Kamu sudah menilai desain ini.
+                        <p className="text-sm text-gray-500 mt-5">
+                            Kamu sudah memberikan penilaian untuk desain ini.
                         </p>
                     )}
                 </div>
             </div>
+        </div>
+    );
+}
+
+/* ================= SCORE INPUT ================= */
+
+function ScoreInput({ label, value, onChange, error }) {
+    return (
+        <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+                {label}
+            </label>
+            <input
+                type="number"
+                min="1"
+                max="100"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                className="border rounded-lg px-3 py-2 text-sm w-full"
+                placeholder="1 - 100"
+            />
+            {error && (
+                <p className="text-xs text-red-500 mt-1">{error}</p>
+            )}
         </div>
     );
 }

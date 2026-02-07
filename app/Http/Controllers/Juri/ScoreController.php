@@ -13,9 +13,19 @@ class ScoreController extends Controller
     public function store(Request $request, Design $design)
     {
         $request->validate([
-            'score'   => 'required|integer|min:1|max:100',
-            'comment' => 'nullable|string',
+            'creativity' => 'required|integer|min:1|max:100',
+            'aesthetic'  => 'required|integer|min:1|max:100',
+            'theme'      => 'required|integer|min:1|max:100',
+            'technique'  => 'required|integer|min:1|max:100',
+            'comment'    => 'nullable|string',
         ]);
+
+        $finalScore = (
+            $request->creativity +
+            $request->aesthetic +
+            $request->theme +
+            $request->technique
+        ) / 4;
 
         Score::updateOrCreate(
             [
@@ -23,12 +33,15 @@ class ScoreController extends Controller
                 'juri_id'   => Auth::id(),
             ],
             [
-                'score'   => $request->score,
-                'comment' => $request->comment,
+                'creativity' => $request->creativity,
+                'aesthetic'  => $request->aesthetic,
+                'theme'      => $request->theme,
+                'technique'  => $request->technique,
+                'score'      => round($finalScore),
+                'comment'    => $request->comment,
             ]
         );
 
-        // ubah status desain
         $design->update([
             'status' => 'reviewed',
         ]);
@@ -36,4 +49,3 @@ class ScoreController extends Controller
         return back()->with('success', 'Penilaian berhasil disimpan');
     }
 }
-

@@ -12,9 +12,14 @@ class Score extends Model
     protected $fillable = [
         'design_id',
         'juri_id',
+        'creativity',
+        'aesthetic',
+        'theme',
+        'technique',
         'score',
         'comment',
     ];
+
 
     // ================= RELATION =================
 

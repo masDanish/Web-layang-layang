@@ -11,9 +11,12 @@ class DashboardController extends Controller
     public function index()
     {
 
-        $users = User::with(['design.scores'])
-            ->where('role', 'user')
-            ->orderBy('created_at', 'desc')
+        $users = User::select('users.*')
+            ->leftJoin('designs', 'users.id', '=', 'designs.user_id')
+            ->leftJoin('scores', 'designs.id', '=', 'scores.design_id')
+            ->where('users.role', 'user')
+            ->orderBy('scores.score', 'desc')
+            ->with(['design.scores'])
             ->get();
 
 
@@ -39,4 +42,6 @@ class DashboardController extends Controller
 
         return back();
     }
+
+    
 }

@@ -11,19 +11,26 @@ return new class extends Migration {
             $table->id();
 
             $table->foreignId('design_id')
-                  ->constrained()
-                  ->cascadeOnDelete();
+                ->constrained()
+                ->cascadeOnDelete();
 
             $table->foreignId('juri_id')
-                  ->constrained('users')
-                  ->cascadeOnDelete();
+                ->constrained('users')
+                ->cascadeOnDelete();
 
-            $table->unsignedTinyInteger('score'); // 1–100
+            // ===== KRITERIA PENILAIAN =====
+            $table->unsignedTinyInteger('creativity');
+            $table->unsignedTinyInteger('aesthetic');
+            $table->unsignedTinyInteger('theme');
+            $table->unsignedTinyInteger('technique');
+
+            // ===== NILAI AKHIR (RATA-RATA) =====
+            $table->unsignedTinyInteger('score'); // hasil rata-rata
+
             $table->text('comment')->nullable();
-
             $table->timestamps();
 
-            // Supaya 1 juri hanya menilai 1 kali per desain
+            // 1 juri hanya menilai 1 desain
             $table->unique(['design_id', 'juri_id']);
         });
     }
