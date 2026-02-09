@@ -93,7 +93,7 @@ export default function Index() {
 
                     <div className="mb-2">
                         <label className="block text-sm font-medium mb-1">
-                            Password
+                            Nama Lengkap
                         </label>
                         <input
                             type="text"
@@ -111,7 +111,7 @@ export default function Index() {
 
                     <div className="mb-2">
                         <label className="block text-sm font-medium mb-1">
-                            Password
+                            Email
                         </label>
                         <input
                             type="email"

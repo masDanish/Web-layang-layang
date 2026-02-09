@@ -23,13 +23,15 @@ export default function ConfirmPassword() {
                     onSubmit={submit}
                     className="w-full max-w-md bg-white p-10 rounded-xl shadow-md"
                 >
+                    {/* HEADER */}
                     <h1 className="text-3xl font-bold text-center mb-2">
                         Konfirmasi Password 🔒
                     </h1>
-                    <p className="text-center text-gray-500 mb-6">
+                    <p className="text-center text-gray-500 mb-8">
                         Lomba Design Layang-Layang
                     </p>
 
+                    {/* INFO */}
                     <p className="text-sm text-gray-600 text-center mb-6">
                         Demi keamanan akun, silakan masukkan kembali password
                         Anda untuk melanjutkan.
@@ -56,6 +58,7 @@ export default function ConfirmPassword() {
                         )}
                     </div>
 
+                    {/* BUTTON */}
                     <button
                         disabled={processing}
                         className="w-full py-3 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition"
@@ -63,6 +66,7 @@ export default function ConfirmPassword() {
                         Konfirmasi
                     </button>
 
+                    {/* BACK */}
                     <p className="text-center text-sm text-gray-600 mt-6">
                         Batal?{' '}
                         <Link
