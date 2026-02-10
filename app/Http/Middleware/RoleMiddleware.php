@@ -20,9 +20,10 @@ class RoleMiddleware
             abort(403, 'ANDA TIDAK MEMILIKI AKSES');
         }
 
-        
+
 
         return $next($request);
     }
-}
 
+    
+}
