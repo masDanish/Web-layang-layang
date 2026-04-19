@@ -3,12 +3,12 @@ import { Link } from "@inertiajs/react";
 
 export default function Welcome() {
     return (
-        <div className="min-h-screen bg-gray-100 text-slate-700 overflow-hidden">
+        <div className="min-h-screen bg-gray-100 text-slate-700">
             {/* NAVBAR */}
-            <nav className="bg-white shadow-sm px-12 py-4 flex justify-between items-center">
-                <h1 className="text-2xl font-bold text-sky-600">
+            <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/75 shadow-sm px-12 py-4 flex justify-between items-center">
+                <a href="/" className="text-2xl font-bold text-sky-600">
                     LayangFest
-                </h1>
+                </a>
 
                 <div className="space-x-6">
                     <Link
@@ -27,7 +27,7 @@ export default function Welcome() {
             </nav>
 
             {/* HERO */}
-            <section className="relative px-12 py-28 bg-gradient-to-br from-gray-100 to-sky-50 overflow-hidden">
+            <section className="min-h-screen relative px-12 py-28 bg-gradient-to-br from-gray-100 to-sky-50 overflow-hidden">
                 {/* BACKGROUND IMAGE */}
                 <div
                     className="absolute inset-0 bg-no-repeat bg-right bg-contain opacity-10 blur-sm"
@@ -38,7 +38,7 @@ export default function Welcome() {
 
                 {/* CONTENT */}
                 <div className="relative z-10 max-w-6xl mx-auto">
-                    <h2 className="text-5xl font-extrabold mb-6 leading-tight">
+                    <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
                         Event Lomba Design Layang-Layang <br />
                         <span className="text-sky-600">
                             Tingkat Nasional
@@ -69,7 +69,7 @@ export default function Welcome() {
             </section>
 
             {/* ABOUT LOMBA */}
-            <section className="px-12 py-28 bg-white">
+            <section className="min-h-screen px-12 py-28 bg-white">
                 <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center">
                     {/* IMAGE */}
                     <div className="relative">
@@ -130,7 +130,7 @@ export default function Welcome() {
                     {
                         title: "Dinilai Juri Profesional",
                         desc: "Penilaian objektif dan transparan oleh juri berpengalaman.",
-                        img: "/images/judge.png",
+                        img: "/images/jury.png",
                     },
                     {
                         title: "Hadiah Menarik",
@@ -148,13 +148,13 @@ export default function Welcome() {
                         className="bg-white rounded-3xl shadow-md hover:shadow-xl transition hover:-translate-y-2 p-8 text-center"
                     >
                         {/* IMAGE WRAPPER */}
-                        <div className="w-32 h-32 mx-auto mb-6 flex items-center justify-center rounded-2xl bg-sky-50">
+                        {/* <div className="w-32 h-32 mx-auto mb-6 flex items-center justify-center rounded-2xl bg-sky-50">
                             <img
                                 src={item.img}
                                 className="w-20 h-20 object-contain"
                                 alt=""
                             />
-                        </div>
+                        </div> */}
 
                         <h3 className="font-bold text-xl mb-3">
                             {item.title}

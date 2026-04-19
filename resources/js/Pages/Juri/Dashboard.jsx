@@ -11,11 +11,9 @@ export default function Dashboard() {
 
             {/* HEADER */}
             <div className="mb-8">
-                <h1 className="text-2xl font-semibold text-gray-800">
-                    Dashboard Juri
-                </h1>
-                <p className="text-sm text-gray-500 mt-1">
-                    Silakan beri penilaian pada desain peserta
+                
+                <p className="text-2xl text-gray-900 mt-1">
+                    Form Penilaian
                 </p>
             </div>
 
@@ -52,21 +50,21 @@ function DesignCard({ design }) {
 
     return (
         <div className="bg-white border rounded-2xl p-6 shadow-sm">
-            <div className="flex gap-6">
+            <div className=" md:flex gap-6">
                 {/* IMAGE */}
                 <img
                     src={`/storage/${design.image_path}`}
                     alt={design.title}
-                    className="w-52 h-52 object-cover rounded-xl border"
+                    className="w-52 h-52 object-cover rounded-xl border mb-4"
                 />
 
                 {/* INFO */}
                 <div className="flex-1">
-                    <h3 className="text-lg font-semibold text-gray-800">
+                    <h3 className="text-2xl font-semibold text-gray-800">
                         {design.title}
                     </h3>
 
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="text-gray-500 mt-1">
                         Oleh: {design.user.name}
                     </p>
 
@@ -77,7 +75,7 @@ function DesignCard({ design }) {
                     {/* STATUS */}
                     <div className="mt-4">
                         <span
-                            className={`text-xs px-3 py-1 rounded-full font-medium ${
+                            className={`text px-3 py-1 rounded-full font-medium ${
                                 design.status === 'reviewed'
                                     ? 'bg-green-100 text-green-700'
                                     : 'bg-yellow-100 text-yellow-700'
@@ -156,11 +154,11 @@ function DesignCard({ design }) {
                         </form>
                     )}
 
-                    {design.status === 'reviewed' && (
+                    {/* {design.status === 'reviewed' && (
                         <p className="text-sm text-gray-500 mt-5">
                             Kamu sudah memberikan penilaian untuk desain ini.
                         </p>
-                    )}
+                    )} */}
                 </div>
             </div>
         </div>
